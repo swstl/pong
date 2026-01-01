@@ -57,8 +57,8 @@ class PongEnv:
         reward = 0.0
         if state["side_lost"] == self.player:
             reward += -10.0
-        elif state["side_lost"] == self.opponent: 
-            reward += 10.0
+        # elif state["side_lost"] == self.opponent: 
+        #     reward += 10.0
 
         colliding_with_player = "ball_colliding_" + self.player
         if state[colliding_with_player]:
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     env = PongEnv(player="right", render=True)
     policy = Policy(inputs=env._get_nr_observations(), outputs=env._get_nr_actions())  # 8 state variables, 3 actions (up, down, idle)
     policy.load_state_dict(torch.load("pong_policy.pth"))
-    optimizer = torch.optim.Adam(policy.parameters(), lr=0.01)
+    optimizer = torch.optim.Adam(policy.parameters(), lr=0.001)
 
     for episode in range(1000):
         train_episode()

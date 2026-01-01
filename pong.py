@@ -214,9 +214,13 @@ class PongGame:
         for player in self.players:
             player.move(dt)
 
-        if self.ball.collides_with(self.players[0]) or self.ball.collides_with(
-            self.players[1]
-        ):
+        if self.ball.collides_with(self.players[0]):
+            ## move ball to avoid it getting stuck
+            self.ball.x = self.players[0].x + self.players[0].width
+            self.ball.vel_x = -self.ball.vel_x
+        elif self.ball.collides_with( self.players[1]):
+            ## move ball to avoid it getting stuck
+            self.ball.x = self.players[1].x - self.ball.size
             self.ball.vel_x = -self.ball.vel_x
 
         self.ball.move(dt)
